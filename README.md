@@ -4,6 +4,8 @@ URL: https://christinelumen.github.io/digital-passport-artworks/
 
 A browser-based prototype for issuing, verifying, and revoking digital passports for artworks — built entirely client-side with real cryptographic primitives.
 
+> **Prototype notice:** Duplicate detection works within a single browser session only. Upload one image, issue its passport, then upload another image — the system compares them in real time. There is no persistent database; refreshing the page clears all memory. This demo shows the detection pipeline, not a production registry.
+
 ## What It Does
 
 This single-page application walks through the full lifecycle of an artwork's digital passport:

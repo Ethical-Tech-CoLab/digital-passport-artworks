@@ -161,6 +161,9 @@
     <p>Upload an artwork photo and it runs the whole pipeline in order — fingerprint the image, search for a prior record, score it for forgery risk, then only once it clears (or a reviewer overrides) does it move into the certificate chain that actually signs and issues the passport. Everything below runs in your browser: real hashing, real signatures, real verification.</p>
     <p class="thesis">The vectors decide whether this artwork earns a passport. The trust chain decides whether that passport can be trusted. Two different jobs, one flow.</p>
     <div class="rail" id="rail"></div>
+    <div style="margin-top:18px; padding:14px 16px; border-radius:3px; background:rgba(184,132,46,0.1); border:1px solid rgba(184,132,46,0.3); font-family:'IBM Plex Mono',monospace; font-size:12px; color:rgba(239,233,218,0.7); line-height:1.6;">
+      <b style="color:#E6C583;">Prototype notice:</b> Duplicate detection works within a single browser session only — upload one image, then upload another, and the system compares them. There is no persistent database; refreshing the page clears all memory. This demo is designed to show the detection pipeline, not to serve as a production registry.
+    </div>
     <div id="sessionCounter" style="margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:12px; color:rgba(239,233,218,0.55);">Session memory: 0 submissions remembered</div>
     <div class="row" style="margin-top:10px;">
       <button id="btnStartOver" class="secondary">Start over (clear this session)</button>
