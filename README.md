@@ -1,6 +1,6 @@
 # Digital Passport for Artworks
 
-URL: https://ethical-tech-colab.github.io/digital-passport-artworks/ 
+URL:   https://ethical-tech-colab.github.io/digital-passport-artworks/                                                                                     
 
 A browser-based prototype for issuing, verifying, and revoking digital passports for artworks — built entirely client-side with real cryptographic primitives.
 
