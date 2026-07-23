@@ -51,3 +51,21 @@ Then visit `http://localhost:8080`.
 ## License
 
 MIT
+
+---
+
+## Peer Review
+
+The full independent academic peer review of this prototype is in [PEER-REVIEW.md](PEER-REVIEW.md) (also available as [Word](peer-review/digital-passport-artworks-Peer-Review.docx) under [`peer-review/`](peer-review/)).
+
+**Recommendation:** Major revisions — for one routing defect and one attribution concern, not for the quality of the engineering, which is high. The in-app honesty about the forensic signals is held up in the review as the portfolio's example of good empirical practice.
+
+**What the review found:**
+
+- **A four-character substring bypasses the routing gate.** `hasProvenanceMarkers` decodes the first 200KB as latin1 and sets `hasC2pa` if the text contains `jumb`, `c2pa`, or `C2PA` anywhere — no JUMBF box parsing, no manifest signature verification. Appending those bytes to any file drops `metaRisk` from 0.65 to 0.10 and moves it from human review to auto-issue. The same happens by accident whenever those characters occur in a filename, comment, or binary run.
+- **The forgery-risk score is 70% metadata presence, and that binary decides the outcome.** With weights ELA 0.10 / spectral 0.10 / noise 0.10 / provenance 0.70 and a binary `metaRisk`, files with EXIF or C2PA bytes score 7–37 and files without score 45–76 — non-overlapping ranges either side of the auto-issue gate at 35. No combination of the three forensic signals can move a file across it, so the signals shown with percentage bars and "+N pt to score" cannot change any routing outcome. EXIF is stripped by most platform pipelines and trivially forged, so the check runs in both wrong directions.
+- **The demo mints credentials in the names of real institutions.** The chain is labelled "AABC × Bocconi / ICOM-UNESCO Council", "Italy Root — Carabinieri TPC", and "Museo Civico Archeologico", and the custodian field is locked to the issuing CA — so an exported passport asserts that a real art-crime authority stands behind an artwork record, from keys generated in the visitor's browser. Recommended fix: fictional placeholders plus a `"demo": true` field inside the signed payload, where it cannot be stripped without breaking the signature.
+- **The self-signed root makes verification circular** and the verify step does not say so — the chain verifies against a root the same page load created.
+- Minor: ELA is retained at 10% despite the UI correctly reporting it unreliable; the calibration sample is four photographs and one synthetic splice; the README presents the four forensic checks as peers; auto-reject is effectively unreachable (needs 76 of a possible 76).
+
+**Reviewer's note on disclosure:** the substring bypass is written up here because the prototype is explicitly session-only with no persistent registry and nothing of value behind the gate. Fixing the check before this demo is linked more widely is the recommended order.
